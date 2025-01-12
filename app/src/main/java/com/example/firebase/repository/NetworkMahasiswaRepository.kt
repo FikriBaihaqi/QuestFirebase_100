@@ -47,6 +47,16 @@ class NetworkMahasiswaRepository(
     }
 
     override suspend fun getmahasiswaById(nim: String): Flow<Mahasiswa> {
-        TODO("Not yet implemented")
+        val mhsDocument =  firestore.collection("Mahasiswa")
+            .document(nim)
+            .addSnapshotListener { value, error ->
+                if (value != null) {
+                    val mhs = value.toObject(Mahasiswa::class.java)!!
+                    trySend(mhs)
+                }
+            }
+        awaitClose {
+            mhsDocument.remove()
+        }
     }
 }

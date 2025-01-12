@@ -38,7 +38,7 @@ class NetworkMahasiswaRepository(
         }
     }
 
-    override suspend fun updatemahasiswa(nim: String, mahasiswa: Mahasiswa) {
+    override suspend fun updatemahasiswa(mahasiswa: Mahasiswa) {
         try {
             firestore.collection("Mahasiswa")
                 .document(mahasiswa.nim)

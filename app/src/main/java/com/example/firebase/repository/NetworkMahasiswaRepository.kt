@@ -42,6 +42,17 @@ class NetworkMahasiswaRepository(
         try {
             firestore.collection("Mahasiswa")
                 .document(mahasiswa.nim)
+                .set(mahasiswa)
+                .await()
+        } catch (e: Exception) {
+            throw Exception("Gagal mengupdate data mahasiswa: ${e.message}")
+        }
+    }
+
+    override suspend fun deletemahasiswa(mahasiswa: Mahasiswa) {
+        try {
+            firestore.collection("Mahasiswa")
+                .document(mahasiswa.nim)
                 .delete()
                 .await()
         } catch (e: Exception) {
@@ -49,11 +60,7 @@ class NetworkMahasiswaRepository(
         }
     }
 
-    override suspend fun deletemahasiswa(nim: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getmahasiswaById(nim: String): Flow<Mahasiswa> {
+    override suspend fun getmahasiswaById(nim: String): Flow<Mahasiswa> = callbackFlow {
         val mhsDocument =  firestore.collection("Mahasiswa")
             .document(nim)
             .addSnapshotListener { value, error ->

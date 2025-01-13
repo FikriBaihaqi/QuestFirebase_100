@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.firebase.model.Mahasiswa
 import com.example.firebase.repository.mahasiswaRepository
-
+import kotlinx.coroutines.launch
 
 class InsertViewModel (
     private val mhs: mahasiswaRepository
@@ -25,7 +27,7 @@ class InsertViewModel (
     }
 
     //Validasi data input pengguna
-    fun validateFields(): Boolean {
+    fun validateFields() : Boolean {
         val event = uiEvent.insertUiEvent
         val errorState = FormErrorState(
             nim = if (event.nim.isNotEmpty()) null else "NIM tidak boleh kosong",
@@ -38,4 +40,21 @@ class InsertViewModel (
         uiEvent = uiEvent.copy(isEntryValid = errorState)
         return errorState.isValid()
     }
+
+    fun insertMhs() {
+        if (validateFields()) {
+            viewModelScope.launch {
+                uiState = FormState.Loading
+                try {
+                    mhs.insertmahasiswa(uiEvent.insertUiEvent.toMhsModel())
+                    uiState = FormState.Success("Data berhasil disimpan")
+                } catch (e: Exception) {
+                    uiState = FormState.Error("Data gagal disimpan")
+                }
+            }
+        } else {
+            uiState = FormState.Error("Data tidak valid")
+        }
+    }
+
 }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface mahasiswaRepository {
     suspend fun getmahasiswa(): Flow<List<Mahasiswa>>
 
-    suspend fun insetmahasiswa(mahasiswa: Mahasiswa)
+    suspend fun insertmahasiswa(mahasiswa: Mahasiswa)
 
     suspend fun updatemahasiswa(mahasiswa: Mahasiswa)
 

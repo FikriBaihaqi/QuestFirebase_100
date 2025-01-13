@@ -30,7 +30,7 @@ class NetworkMahasiswaRepository(
         }
     }
 
-    override suspend fun insetmahasiswa(mahasiswa: Mahasiswa) {
+    override suspend fun insertmahasiswa(mahasiswa: Mahasiswa) {
         try {
             firestore.collection("Mahasiswa").add(mahasiswa).await()
         } catch (e: Exception) {

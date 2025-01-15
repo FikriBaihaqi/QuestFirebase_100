@@ -71,7 +71,7 @@ fun HomeScreen(
             modifier = Modifier.padding(innerPadding),
             onDetailClick = onDetailClick,
             onDeleteClick = {
-                viewModel.deleteMhs(it)
+                viewModel.deleteMhs(it.nim)
             }
         )
     }
@@ -203,7 +203,7 @@ fun MhsCard(
 
 
             Text(
-                text = mahasiswa.kelas,
+                text = mahasiswa.judul_skripsi,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(

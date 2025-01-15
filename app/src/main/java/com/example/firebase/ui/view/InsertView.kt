@@ -1,5 +1,7 @@
 package com.example.firebase.ui.view
 
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,10 +32,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.firebase.ui.viewmodel.FormErrorState
+import com.example.firebase.ui.viewmodel.FormState
+import com.example.firebase.ui.viewmodel.InsertUiState
 import com.example.firebase.ui.viewmodel.InsertViewModel
+import com.example.firebase.ui.viewmodel.MahasiswaEvent
+import com.example.firebase.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InsertMhsView(
@@ -255,5 +263,30 @@ fun FormMahasiswa(
             KeyboardType.Number)
         )
         Text(text = errorState.angkatan ?: "", color = Color.Red)
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.judul_skripsi,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(judul_skripsi = it))
+                },
+            label = { Text("Judul Skripsi") },
+            isError = errorState.judul_skripsi != null,
+            placeholder = { Text("Masukkan judul skripsi") },
+        )
+        Text(text = errorState.judul_skripsi ?: "", color = Color.Red)
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.dosen_pembimbing,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(dosen_pembimbing = it))
+            },
+            label = { Text("Dosen Pembimbing") },
+            isError = errorState.dosen_pembimbing != null,
+            placeholder = { Text("Masukkan dosen pembimbing") },
+        )
+
+        Text(text = errorState.dosen_pembimbing ?: "", color = Color.Red)
+
     }
 }

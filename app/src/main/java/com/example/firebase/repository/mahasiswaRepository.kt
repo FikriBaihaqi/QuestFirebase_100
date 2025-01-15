@@ -10,7 +10,7 @@ interface mahasiswaRepository {
 
     suspend fun updatemahasiswa(mahasiswa: Mahasiswa)
 
-    suspend fun deletemahasiswa(mahasiswa: Mahasiswa)
+    suspend fun deletemahasiswa(nim: String)
 
     suspend fun getmahasiswaById(nim: String): Flow<Mahasiswa>
 }

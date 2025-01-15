@@ -21,6 +21,7 @@ object PenyediaViewModel {
                 mahasiswaApplications().container.mahasiswaRepository
             )
         }
+
     }
 
 }
